@@ -1,13 +1,60 @@
 if SERVER then
 	AddCSLuaFile()
 
-	resource.AddFile("materials/vgui/ttt/perks/hud_parachute.png")
+	resource.AddFile("materials/vgui/ttt/perks/dms.png")
 end
 
-ITEM.hud = Material("vgui/ttt/perks/hud_parachute.png")
+ITEM.hud = Material("vgui/ttt/perks/dms.png")
 ITEM.EquipMenuData = {
 	type = "item_passive",
 	name = "Dead Man's Switch",
 	desc = "Upon your death, everyone will be notified."
 }
 ITEM.material = "vgui/ttt/perks/dms.png"
+
+if SERVER then
+	-- Add the wallhacks on your dead body
+	hook.Add("TTTOnCorpseCreated", "ParaAddedDeadBody", function(rag, ply)
+		if not IsValid(rag) or not IsValid(ply) then return end
+
+		if not ply:HasEquipmentItem("item_ttt_dms") then return end
+
+		local mvObject = rag:AddMarkerVision("corpse_para")
+		mvObject:SetOwner(ROLE_PARANOID)
+		mvObject:SetVisibleFor(VISIBLE_FOR_ALL)
+		mvObject:SyncToClients()
+	end)
+	
+	-- Remove the wallhacks on dead bodies
+	hook.Add("EntityRemoved", "ParaRemovedDeadBody", function(ent)
+		if not IsValid(ent) or ent:GetClass() ~= "prop_ragdoll" then return end
+
+		ent:RemoveMarkerVision("corpse_para")
+	end)
+end
+
+-- actual wallhacks part
+if CLIENT then
+	local TryT = LANG.TryTranslation
+	local ParT = LANG.GetParamTranslation
+
+	local materialCorpse = Material("vgui/ttt/tid/tid_big_corpse")
+
+	hook.Add("TTT2RenderMarkerVisionInfo", "HUDDrawMarkerVisionVultCorpse", function(mvData)
+		local client = LocalPlayer()
+		local ent = mvData:GetEntity()
+		local mvObject = mvData:GetMarkerVisionObject()
+
+		if not client:IsTerror() or not mvObject:IsObjectFor(ent, "corpse_para") then return end
+
+		local distance = math.Round(util.HammerUnitsToMeters(mvData:GetEntityDistance()), 1)
+
+		mvData:EnableText()
+
+		mvData:AddIcon(materialCorpse)
+		mvData:SetTitle(ParT("The paranoids body", {nick = CORPSE.GetPlayerNick(ent, "---")}))
+
+		mvData:AddDescriptionLine(ParT("marker_vision_distance", {distance = distance}))
+		mvData:AddDescriptionLine(TryT(mvObject:GetVisibleForTranslationKey()), COLOR_SLATEGRAY)
+	end)
+end

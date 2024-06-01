@@ -5,7 +5,7 @@ if SERVER then
 end
 
 function ROLE:PreInitialize()
-  self.color = Color(191, 210, 65, 255)
+  self.color = Color(87, 217, 134, 255)
 
   self.abbr = "para" -- abbreviation
   self.surviveBonus = 0 -- bonus multiplier for every survive while another player was killed
@@ -30,4 +30,16 @@ end
 -- now link this subrole with its baserole
 function ROLE:Initialize()
   roles.SetBaseRole(self, ROLE_INNOCENT)
+end
+
+if SERVER then
+	-- Give Loadout on respawn and rolechange
+	function ROLE:GiveRoleLoadout(ply, isRoleChange)
+		ply:GiveEquipmentItem("item_ttt_dms")
+	end
+
+	-- Remove Loadout on death and rolechange
+	function ROLE:RemoveRoleLoadout(ply, isRoleChange)
+		ply:RemoveEquipmentItem("item_ttt_dms")
+	end
 end
