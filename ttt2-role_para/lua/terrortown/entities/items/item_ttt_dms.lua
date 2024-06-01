@@ -1,6 +1,6 @@
 if SERVER then
 	AddCSLuaFile()
-
+	util.AddNetworkString("ttt2_para_death")
 	resource.AddFile("materials/vgui/ttt/perks/dms.png")
 end
 
@@ -21,6 +21,7 @@ if SERVER then
 		if not ply:HasEquipmentItem("item_ttt_dms") then return end
 
 		-- send net message to clients so they know he died
+		SendFullStateUpdate()
 		net.Start("ttt2_para_death")
 		net.Broadcast()
 
