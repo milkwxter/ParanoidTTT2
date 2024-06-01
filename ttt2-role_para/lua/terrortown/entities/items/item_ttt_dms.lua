@@ -17,7 +17,11 @@ if SERVER then
 	hook.Add("TTTOnCorpseCreated", "ParaAddedDeadBody", function(rag, ply)
 		if not IsValid(rag) or not IsValid(ply) then return end
 
+		-- check if the guy who died actually has our item
 		if not ply:HasEquipmentItem("item_ttt_dms") then return end
+
+		-- tell everyone he died
+		EPOP:AddMessage({text = "The Paranoid's heartbeat has stopped!", color = PARANOID.color}, 6, nil, true)
 
 		local mvObject = rag:AddMarkerVision("corpse_para")
 		mvObject:SetOwner(ROLE_PARANOID)
