@@ -20,8 +20,9 @@ if SERVER then
 		-- check if the guy who died actually has our item
 		if not ply:HasEquipmentItem("item_ttt_dms") then return end
 
-		-- tell everyone he died
-		EPOP:AddMessage({text = "The Paranoid's heartbeat has stopped!", color = PARANOID.color}, 6, nil, true)
+		-- send net message to clients so they know he died
+		net.Start("ttt2_para_death")
+		net.Broadcast()
 
 		local mvObject = rag:AddMarkerVision("corpse_para")
 		mvObject:SetOwner(ROLE_PARANOID)
@@ -56,7 +57,7 @@ if CLIENT then
 		mvData:EnableText()
 
 		mvData:AddIcon(materialCorpse)
-		mvData:SetTitle(ParT("The paranoids body", {nick = CORPSE.GetPlayerNick(ent, "---")}))
+		mvData:SetTitle("The corpse of the Paranoid.")
 
 		mvData:AddDescriptionLine(ParT("marker_vision_distance", {distance = distance}))
 		mvData:AddDescriptionLine(TryT(mvObject:GetVisibleForTranslationKey()), COLOR_SLATEGRAY)
