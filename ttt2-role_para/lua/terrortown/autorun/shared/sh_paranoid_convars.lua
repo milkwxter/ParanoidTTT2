@@ -1,0 +1,1 @@
+CreateConVar("ttt2_paranoid_annouce_death", true, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
