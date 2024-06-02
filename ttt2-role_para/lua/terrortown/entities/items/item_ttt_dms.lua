@@ -7,8 +7,8 @@ end
 ITEM.hud = Material("vgui/ttt/perks/dms.png")
 ITEM.EquipMenuData = {
 	type = "item_passive",
-	name = "Dead Man's Switch",
-	desc = "Upon your death, everyone will be notified."
+	name = "lang_para_dms_name",
+	desc = "lang_para_dms_desc"
 }
 ITEM.material = "vgui/ttt/perks/dms.png"
 
@@ -58,7 +58,7 @@ if CLIENT then
 		mvData:EnableText()
 
 		mvData:AddIcon(materialCorpse)
-		mvData:SetTitle("The corpse of the Paranoid.")
+		mvData:SetTitle(TryT("lang_para_body_text"))
 
 		mvData:AddDescriptionLine(ParT("marker_vision_distance", {distance = distance}))
 		mvData:AddDescriptionLine(TryT(mvObject:GetVisibleForTranslationKey()), COLOR_SLATEGRAY)
