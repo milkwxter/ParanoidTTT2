@@ -11,6 +11,8 @@ ITEM.EquipMenuData = {
 	desc = "lang_para_dms_desc"
 }
 ITEM.material = "vgui/ttt/perks/dms.png"
+ITEM.CanBuy = {}
+ITEM.limited = true
 
 if SERVER then
 	-- Add the wallhacks on your dead body
