@@ -3,3 +3,4 @@ I am updating the damn mod!
 
 ### TODO List
 - [ ] Switch color to be consistent with OG innocent
+- [ ] Reduce amount of files so its easier to work on
