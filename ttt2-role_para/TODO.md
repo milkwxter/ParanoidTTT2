@@ -7,3 +7,5 @@ I am updating the damn mod!
 - [ ] some form of counter play for traitors
 - [ ] cleaner role icon
 - [ ] remove dead mans switch item probably (ie make the effects intrinsic to the role)
+- [ ] better vmt settings
+- [ ] check lang files for consistency
